@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./BackDrop.scss";
 class BackDrop extends Component {
 	componentDidMount() {
-		document.body.style.overflow = "hidden";
+		document.body.style.overflow = "scroll";
 	}
 
 	componentDidUpdate() {
