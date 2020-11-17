@@ -11,7 +11,14 @@
 	transition: transform 0.3s ease;
 	z-index: 101;
 	overflow: hidden;
+	display: none;
 	&.opened {
 		transform: translateX(0);
+	}
+}
+
+@media (max-width: 720px) {
+	.side-drawer {
+		display: block;
 	}
 }
