@@ -1,14 +1,14 @@
 import React from "react";
 
-import "./HomePage.scss";
+import "./Home.scss";
 import MenuItems from "../../components/MenuItems/MenuItems";
 
-const HomePage = () => {
+const Home = () => {
 	return (
-		<div className="homepage">
+		<div className="home">
 			<MenuItems />
 		</div>
 	);
 };
 
-export default HomePage;
+export default Home;
