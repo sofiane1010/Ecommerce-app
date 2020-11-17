@@ -1,8 +1,9 @@
+import React from "react";
+import HomePage from "./pages/HomePage/HomePage";
 import "./App.scss";
-import Test from "./test";
 
-function App() {
-	return <Test />;
-}
+const App = (props) => {
+	return <HomePage />;
+};
 
 export default App;
