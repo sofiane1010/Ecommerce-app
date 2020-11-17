@@ -1,0 +1,21 @@
+.header {
+	height: 70px;
+	width: 100%;
+	max-width: 1300px;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: white;
+
+	.nav-bar {
+		height: 100%;
+		margin-right: 20px;
+	}
+}
+
+@media (max-width: 720px) {
+	.nav-bar {
+		display: none;
+	}
+}

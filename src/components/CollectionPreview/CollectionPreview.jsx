@@ -2,7 +2,7 @@ import React from "react";
 
 import "./CollectionPreview.scss";
 
-import CollectionItem from "../CollectionItem/CollectionItem";
+import CollectionItem from "./CollectionItem/CollectionItem";
 
 const CollectionPreview = ({ title, items, viewPortWidth }) => {
 	let numberOfItems;

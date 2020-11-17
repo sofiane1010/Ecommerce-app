@@ -1,0 +1,29 @@
+.links-container {
+	margin: 0;
+	display: flex;
+	align-items: center;
+	padding: 0;
+	.link {
+		list-style: none;
+		height: 100%;
+		display: flex;
+		align-items: center;
+	}
+}
+
+@media (max-width: 720px) {
+	.links-container {
+		margin-top: 20px;
+		flex-direction: column;
+		position: relative;
+		&::before {
+			content: "";
+			position: absolute;
+			left: auto;
+			right: 10%;
+			height: 1.5px;
+			width: 80%;
+			background-color: rgb(255, 153, 0);
+		}
+	}
+}

@@ -7,6 +7,12 @@
 		font-size: 28px;
 		margin-bottom: 25px;
 		color: rgb(94, 104, 110);
+		width: 200px;
+		cursor: pointer;
+		transition: color 0.1s;
+		&:hover {
+			color: rgb(255, 153, 0);
+		}
 	}
 
 	.preview {
