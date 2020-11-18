@@ -1,5 +1,4 @@
-$primary-color: rgb(145, 145, 145);
-$secondary-color: rgb(255, 153, 0);
+@import "../../../../scss-variables";
 
 .navigation-link {
 	color: $primary-color;
