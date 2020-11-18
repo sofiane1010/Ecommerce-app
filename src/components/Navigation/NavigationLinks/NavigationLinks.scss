@@ -1,3 +1,5 @@
+$secondary-color: rgb(255, 153, 0);
+
 .links-container {
 	margin: 0;
 	display: flex;
@@ -23,7 +25,7 @@
 			right: 10%;
 			height: 1.5px;
 			width: 80%;
-			background-color: rgb(255, 153, 0);
+			background-color: $secondary-color;
 		}
 	}
 }

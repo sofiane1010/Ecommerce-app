@@ -1,3 +1,6 @@
+$primary-color: rgb(145, 145, 145);
+$secondary-color: rgb(255, 153, 0);
+
 .collection-preview {
 	display: flex;
 	flex-direction: column;
@@ -6,12 +9,12 @@
 	.title {
 		font-size: 28px;
 		margin-bottom: 25px;
-		color: rgb(94, 104, 110);
+		color: $primary-color;
 		width: 200px;
 		cursor: pointer;
 		transition: color 0.1s;
 		&:hover {
-			color: rgb(255, 153, 0);
+			color: $secondary-color;
 		}
 	}
 

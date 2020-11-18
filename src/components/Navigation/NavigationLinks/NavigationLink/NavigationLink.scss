@@ -1,5 +1,8 @@
+$primary-color: rgb(145, 145, 145);
+$secondary-color: rgb(255, 153, 0);
+
 .navigation-link {
-	color: rgb(128, 128, 128);
+	color: $primary-color;
 	text-decoration: none;
 	height: 100%;
 	line-height: 70px;
@@ -16,13 +19,13 @@
 	}
 	&:hover {
 		&::before {
-			background-color: rgb(145, 145, 145);
+			background-color: $primary-color;
 		}
 	}
 	&.active-link {
-		color: rgb(255, 153, 0);
+		color: $secondary-color;
 		&::before {
-			background-color: rgb(255, 153, 0);
+			background-color: $secondary-color;
 		}
 	}
 }
