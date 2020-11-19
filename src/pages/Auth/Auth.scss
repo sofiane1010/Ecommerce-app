@@ -1,0 +1,15 @@
+.auth {
+	display: flex;
+	width: 80%;
+	justify-content: space-around;
+	margin: auto;
+	max-width: 1200px;
+	margin-top: 40px;
+}
+
+@media (max-width: 970px) {
+	.auth {
+		align-items: center;
+		flex-direction: column;
+	}
+}

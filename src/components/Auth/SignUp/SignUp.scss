@@ -1,0 +1,11 @@
+.sign-up {
+	width: 40%;
+}
+
+@media (max-width: 970px) {
+	.sign-up {
+		margin: 20px auto 30px;
+		width: 100%;
+		max-width: 600px;
+	}
+}
