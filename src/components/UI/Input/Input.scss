@@ -8,7 +8,7 @@
 
 .group {
 	position: relative;
-	margin: 45px 0;
+	margin: 65px 0;
 
 	.form-input {
 		box-sizing: border-box;
@@ -22,7 +22,6 @@
 		border: none;
 		border-radius: 0;
 		border-bottom: 1px solid $gray;
-		margin: 25px 0;
 
 		&:focus {
 			outline: none;
@@ -37,6 +36,18 @@
 				& ~ .form-input-label {
 					@include shrinkLabel();
 					color: $gray;
+				}
+			}
+		}
+
+		&.invalid {
+			border-bottom: 1px solid red;
+			& ~ .form-input-label {
+				color: red;
+			}
+			&:not(:focus) {
+				& ~ .form-input-label {
+					color: red;
 				}
 			}
 		}
@@ -55,5 +66,11 @@
 		left: 5px;
 		top: 10px;
 		transition: 0.2s ease all;
+	}
+
+	.error-message {
+		font-size: 13px;
+		color: red;
+		margin-right: 5px;
 	}
 }

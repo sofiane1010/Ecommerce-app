@@ -3,6 +3,13 @@ import React, { Component } from "react";
 import "./SignUp.scss";
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
+
+const patterns = {
+	fullName: /^[a-zéèçà]+ [a-zéèçà]+$/i,
+	email: /^([\w-.éèçà]+)@([\w-]+)\.([a-zéèçà]{2,8})(\.[a-zéèçà]{2,8})*$/,
+	password: /^[\w.,-@éè&çà]{6,}$/,
+};
+
 class SignUp extends Component {
 	state = {
 		formInputs: {
@@ -18,6 +25,8 @@ class SignUp extends Component {
 					htmlFor: "fullName",
 					value: "Full Name",
 				},
+				isValid: true,
+				errorMessage: "**Must contain your full name**",
 			},
 			email: {
 				inputAttributes: {
@@ -31,6 +40,8 @@ class SignUp extends Component {
 					htmlFor: "email",
 					value: "Email",
 				},
+				isValid: true,
+				errorMessage: "**Must be a valid email**",
 			},
 			password: {
 				inputAttributes: {
@@ -44,6 +55,8 @@ class SignUp extends Component {
 					htmlFor: "password",
 					value: "Password",
 				},
+				isValid: true,
+				errorMessage: "**Must contain at least 6 alphanumeric caracters**",
 			},
 			confirmPassword: {
 				inputAttributes: {
@@ -57,13 +70,39 @@ class SignUp extends Component {
 					htmlFor: "confirmPassword",
 					value: "Confirm Password",
 				},
+				isValid: true,
+				errorMessage: "**Password doesn't match**",
 			},
 		},
 	};
 
+	checkValidity = (regex, value) => regex.test(value);
+
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.setState({ email: "", password: "" });
+		const { formInputs } = this.state;
+		const updatedFormInputs = Object.values(formInputs).reduce(
+			(obj, current) => {
+				if (current.inputAttributes.name === "confirmPassword")
+					current.isValid =
+						obj["password"].inputAttributes.value ===
+						current.inputAttributes.value;
+				else
+					current.isValid = this.checkValidity(
+						patterns[current.inputAttributes.name],
+						current.inputAttributes.value
+					);
+				obj[current.inputAttributes.name] = current;
+
+				return obj;
+			},
+			{}
+		);
+		// const formIsValid = Object.values(updatedFormInputs)
+		// 	.map(({ inputAttributes }) => inputAttributes.isValid)
+		// 	.every((isValid) => isValid);
+
+		this.setState({ formInputs: updatedFormInputs });
 	};
 
 	updateInputValue = (e) => {

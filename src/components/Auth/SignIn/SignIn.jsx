@@ -4,6 +4,11 @@ import "./SignIn.scss";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
 
+const patterns = {
+	email: /^([\w-.éèçà]+)@([\w-]+)\.([a-zéèçà]{2,8})(\.[a-zéèçà]{2,8})*$/,
+	password: /^[\w.,-@éè&çà]{6,}$/,
+};
+
 class SignIn extends Component {
 	state = {
 		formInputs: {
@@ -19,6 +24,8 @@ class SignIn extends Component {
 					htmlFor: "email",
 					value: "Email",
 				},
+				isValid: true,
+				errorMessage: "**Must be a valid email**",
 			},
 			password: {
 				inputAttributes: {
@@ -32,13 +39,34 @@ class SignIn extends Component {
 					htmlFor: "password",
 					value: "Password",
 				},
+				isValid: true,
+				errorMessage: "**Must contain at least 6 alphanumeric caracters**",
 			},
 		},
 	};
 
+	checkValidity = (regex, value) => regex.test(value);
+
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.setState({ email: "", password: "" });
+		const { formInputs } = this.state;
+		const updatedFormInputs = Object.values(formInputs).reduce(
+			(obj, current) => {
+				current.isValid = this.checkValidity(
+					patterns[current.inputAttributes.name],
+					current.inputAttributes.value
+				);
+				obj[current.inputAttributes.name] = current;
+
+				return obj;
+			},
+			{}
+		);
+		// const formIsValid = Object.values(updatedFormInputs)
+		// 	.map(({ inputAttributes }) => inputAttributes.isValid)
+		// 	.every((isValid) => isValid);
+
+		this.setState({ formInputs: updatedFormInputs });
 	};
 
 	updateInputValue = (e) => {
