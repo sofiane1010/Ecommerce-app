@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { signUp } from "../../../firebase.utils";
+import { withRouter } from "react-router";
 
 import "./SignUp.scss";
 import Button from "../../UI/Button/Button";
@@ -99,6 +100,7 @@ class SignUp extends Component {
 	handleSubmit = async (e) => {
 		e.preventDefault();
 		const { formInputs } = this.state;
+		const { history } = this.props;
 		const { email, password } = formInputs;
 		const updatedFormInputs = this.checkFormValidity(formInputs);
 		const formIsValid = Object.values(updatedFormInputs)
@@ -112,6 +114,7 @@ class SignUp extends Component {
 					email.inputAttributes.value,
 					password.inputAttributes.value
 				);
+				history.replace("/");
 				console.log(user);
 			} catch (error) {
 				alert(error.message);
@@ -149,4 +152,4 @@ class SignUp extends Component {
 		);
 	}
 }
-export default SignUp;
+export default withRouter(SignUp);
