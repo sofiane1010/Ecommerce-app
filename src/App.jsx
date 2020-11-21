@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { auth } from "./firebase.utils";
 
+import Loader from "./components/UI/Loader/Loader";
 import Layout from "./hoc/Layout/Layout";
 import Shop from "./pages/Shop/Shop";
 import Auth from "./pages/Auth/Auth";
@@ -12,12 +13,12 @@ import "./App.scss";
 class App extends Component {
 	state = {
 		user: null,
+		loading: true,
 	};
 
 	componentDidMount() {
 		this.unsubscribe = auth.onAuthStateChanged((user) => {
-			this.setState({ user: user });
-			console.log(user);
+			this.setState({ user: user, loading: false });
 		});
 	}
 
@@ -26,8 +27,10 @@ class App extends Component {
 	}
 
 	render() {
-		const { user } = this.state;
-		return (
+		const { user, loading } = this.state;
+		const app = loading ? (
+			<Loader fullScreen />
+		) : (
 			<Layout user={user}>
 				<Switch>
 					<Route path="/signout" component={Signout} />
@@ -38,6 +41,7 @@ class App extends Component {
 				</Switch>
 			</Layout>
 		);
+		return app;
 	}
 }
 

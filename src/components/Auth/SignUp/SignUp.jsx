@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { signUp } from "../../../firebase.utils";
 
 import "./SignUp.scss";
 import Button from "../../UI/Button/Button";
@@ -76,33 +77,46 @@ class SignUp extends Component {
 		},
 	};
 
-	checkValidity = (regex, value) => regex.test(value);
+	checkInputValidity = (regex, value) => regex.test(value);
 
-	handleSubmit = (e) => {
+	checkFormValidity = (formInputs) => {
+		return Object.values(formInputs).reduce((obj, current) => {
+			if (current.inputAttributes.name === "confirmPassword")
+				current.isValid =
+					obj["password"].inputAttributes.value ===
+					current.inputAttributes.value;
+			else
+				current.isValid = this.checkInputValidity(
+					patterns[current.inputAttributes.name],
+					current.inputAttributes.value
+				);
+			obj[current.inputAttributes.name] = current;
+
+			return obj;
+		}, {});
+	};
+
+	handleSubmit = async (e) => {
 		e.preventDefault();
 		const { formInputs } = this.state;
-		const updatedFormInputs = Object.values(formInputs).reduce(
-			(obj, current) => {
-				if (current.inputAttributes.name === "confirmPassword")
-					current.isValid =
-						obj["password"].inputAttributes.value ===
-						current.inputAttributes.value;
-				else
-					current.isValid = this.checkValidity(
-						patterns[current.inputAttributes.name],
-						current.inputAttributes.value
-					);
-				obj[current.inputAttributes.name] = current;
-
-				return obj;
-			},
-			{}
-		);
-		// const formIsValid = Object.values(updatedFormInputs)
-		// 	.map(({ inputAttributes }) => inputAttributes.isValid)
-		// 	.every((isValid) => isValid);
-
+		const { email, password } = formInputs;
+		const updatedFormInputs = this.checkFormValidity(formInputs);
+		const formIsValid = Object.values(updatedFormInputs)
+			.map(({ isValid }) => isValid)
+			.every((isValid) => isValid);
 		this.setState({ formInputs: updatedFormInputs });
+
+		if (formIsValid) {
+			try {
+				const { user } = await signUp(
+					email.inputAttributes.value,
+					password.inputAttributes.value
+				);
+				console.log(user);
+			} catch (error) {
+				alert(error.message);
+			}
+		}
 	};
 
 	updateInputValue = (e) => {

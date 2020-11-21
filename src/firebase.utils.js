@@ -24,5 +24,9 @@ firebase.auth().useDeviceLanguage();
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 export const signOut = () => auth.signOut();
+export const signUp = (email, password) =>
+	auth.createUserWithEmailAndPassword(email, password);
+export const signIn = (email, password) =>
+	auth.signInWithEmailAndPassword(email, password);
 
 export default firebase;

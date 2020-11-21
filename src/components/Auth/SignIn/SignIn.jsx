@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { signInWithGoogle } from "../../../firebase.utils";
+import { signInWithGoogle, signIn } from "../../../firebase.utils";
 
 import "./SignIn.scss";
 import Input from "../../UI/Input/Input";
@@ -46,36 +46,6 @@ class SignIn extends Component {
 		},
 	};
 
-	checkValidity = (regex, value) => regex.test(value);
-
-	handleSubmit = (e) => {
-		e.preventDefault();
-		const { formInputs } = this.state;
-		const updatedFormInputs = Object.values(formInputs).reduce(
-			(obj, current) => {
-				current.isValid = this.checkValidity(
-					patterns[current.inputAttributes.name],
-					current.inputAttributes.value
-				);
-				obj[current.inputAttributes.name] = current;
-
-				return obj;
-			},
-			{}
-		);
-
-		// const formIsValid = Object.values(updatedFormInputs)
-		// 	.map(({ inputAttributes }) => inputAttributes.isValid)
-		// 	.every((isValid) => isValid);
-
-		this.setState({ formInputs: updatedFormInputs });
-	};
-
-	handleSignInWithGoogle = async () => {
-		const { user } = await signInWithGoogle();
-		console.log(user);
-	};
-
 	updateInputValue = (e) => {
 		const { name, value } = e.target;
 		const updatedFormInputs = { ...this.state.formInputs };
@@ -85,6 +55,47 @@ class SignIn extends Component {
 		updatedInput.inputAttributes = updatedInputAttributes;
 		updatedFormInputs[name] = updatedInput;
 		this.setState({ formInputs: updatedFormInputs });
+	};
+
+	checkInputValidity = (regex, value) => regex.test(value);
+
+	checkFormValidity = (formInputs) => {
+		return Object.values(formInputs).reduce((obj, current) => {
+			current.isValid = this.checkInputValidity(
+				patterns[current.inputAttributes.name],
+				current.inputAttributes.value
+			);
+			obj[current.inputAttributes.name] = current;
+
+			return obj;
+		}, {});
+	};
+
+	handleSignInWithGoogle = async () => {
+		const { user } = await signInWithGoogle();
+		console.log(user);
+	};
+
+	handleSubmit = async (e) => {
+		e.preventDefault();
+		const { formInputs } = this.state;
+		const { email, password } = formInputs;
+		const updatedFormInputs = this.checkFormValidity(formInputs);
+		const formIsValid = Object.values(updatedFormInputs)
+			.map(({ isValid }) => isValid)
+			.every((isValid) => isValid);
+		this.setState({ formInputs: updatedFormInputs });
+		if (formIsValid) {
+			try {
+				const { user } = await signIn(
+					email.inputAttributes.value,
+					password.inputAttributes.value
+				);
+				console.log(user);
+			} catch (error) {
+				alert(error.message);
+			}
+		}
 	};
 
 	render() {
