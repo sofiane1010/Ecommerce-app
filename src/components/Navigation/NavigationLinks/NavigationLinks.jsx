@@ -3,7 +3,7 @@ import React from "react";
 import "./NavigationLinks.scss";
 import NavigationLink from "./NavigationLink/NavigationLink";
 
-const NavigationLinks = ({ closeSideDrawer }) => {
+const NavigationLinks = ({ closeSideDrawer, isAuth }) => {
 	return (
 		<ul className="links-container">
 			<li className="link">
@@ -21,11 +21,19 @@ const NavigationLinks = ({ closeSideDrawer }) => {
 				/>
 			</li>
 			<li className="link">
-				<NavigationLink
-					path="/auth"
-					option="SIGN IN"
-					closeSideDrawer={closeSideDrawer}
-				/>
+				{isAuth ? (
+					<NavigationLink
+						path="/signout"
+						option="SIGN OUT"
+						closeSideDrawer={closeSideDrawer}
+					/>
+				) : (
+					<NavigationLink
+						path="/auth"
+						option="SIGN IN"
+						closeSideDrawer={closeSideDrawer}
+					/>
+				)}
 			</li>
 		</ul>
 	);

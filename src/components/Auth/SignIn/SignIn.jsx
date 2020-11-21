@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { signInWithGoogle } from "../../../firebase.utils";
 
 import "./SignIn.scss";
 import Input from "../../UI/Input/Input";
@@ -62,11 +63,17 @@ class SignIn extends Component {
 			},
 			{}
 		);
+
 		// const formIsValid = Object.values(updatedFormInputs)
 		// 	.map(({ inputAttributes }) => inputAttributes.isValid)
 		// 	.every((isValid) => isValid);
 
 		this.setState({ formInputs: updatedFormInputs });
+	};
+
+	handleSignInWithGoogle = async () => {
+		const { user } = await signInWithGoogle();
+		console.log(user);
 	};
 
 	updateInputValue = (e) => {
@@ -94,7 +101,11 @@ class SignIn extends Component {
 					<Button type="submit" color="black">
 						Sign in
 					</Button>
-					<Button type="submit" color="orange">
+					<Button
+						type="button"
+						onClick={this.handleSignInWithGoogle}
+						color="orange"
+					>
 						Login with Google
 					</Button>
 				</form>

@@ -6,12 +6,12 @@ import BurgerMenu from "../BurgerMenu/BurgerMenu";
 
 import "./Header.scss";
 
-const Header = ({ closeSideDrawer }) => (
+const Header = ({ closeSideDrawer, isAuth }) => (
 	<header className="header">
 		<BurgerMenu clicked={closeSideDrawer} />
 		<Logo />
 		<nav className="nav-bar">
-			<NavigationLinks />
+			<NavigationLinks isAuth={isAuth} />
 		</nav>
 	</header>
 );

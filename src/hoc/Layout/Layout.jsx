@@ -14,12 +14,19 @@ class Layout extends Component {
 		}));
 	};
 	render() {
-		const { children } = this.props;
+		const { children, user } = this.props;
 		const { showSideDrawer } = this.state;
 		return (
 			<Fragment>
-				<Header closeSideDrawer={this.handleCloseSideDrawer} />
-				<SideDrawer show={showSideDrawer} close={this.handleCloseSideDrawer} />
+				<Header
+					closeSideDrawer={this.handleCloseSideDrawer}
+					isAuth={user !== null}
+				/>
+				<SideDrawer
+					show={showSideDrawer}
+					isAuth={user !== null}
+					close={this.handleCloseSideDrawer}
+				/>
 				<main>{children}</main>
 			</Fragment>
 		);
