@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { signUp } from "../../../firebase.utils";
+import { signUp, createNewDocumentProfile } from "../../../firebase.utils";
 import { withRouter } from "react-router";
 
 import "./SignUp.scss";
@@ -101,7 +101,7 @@ class SignUp extends Component {
 		e.preventDefault();
 		const { formInputs } = this.state;
 		const { history } = this.props;
-		const { email, password } = formInputs;
+		const { email, password, fullName } = formInputs;
 		const updatedFormInputs = this.checkFormValidity(formInputs);
 		const formIsValid = Object.values(updatedFormInputs)
 			.map(({ isValid }) => isValid)
@@ -114,8 +114,10 @@ class SignUp extends Component {
 					email.inputAttributes.value,
 					password.inputAttributes.value
 				);
+				await createNewDocumentProfile(user, {
+					fullName: fullName.inputAttributes.value,
+				});
 				history.replace("/");
-				console.log(user);
 			} catch (error) {
 				alert(error.message);
 			}

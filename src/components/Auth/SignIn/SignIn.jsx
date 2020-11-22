@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { signInWithGoogle, signIn } from "../../../firebase.utils";
+import {
+	signInWithGoogle,
+	signIn,
+	createNewDocumentProfile,
+} from "../../../firebase.utils";
 import { withRouter } from "react-router";
 
 import "./SignIn.scss";
@@ -74,9 +78,13 @@ class SignIn extends Component {
 
 	handleSignInWithGoogle = async () => {
 		const { history } = this.props;
-		const { user } = await signInWithGoogle();
-		console.log(user);
-		history.replace("/");
+		try {
+			const { user } = await signInWithGoogle();
+			await createNewDocumentProfile(user, null, true);
+			history.replace("/");
+		} catch (error) {
+			alert(error.message);
+		}
 	};
 
 	handleSubmit = async (e) => {
@@ -91,12 +99,11 @@ class SignIn extends Component {
 		this.setState({ formInputs: updatedFormInputs });
 		if (formIsValid) {
 			try {
-				const { user } = await signIn(
+				await signIn(
 					email.inputAttributes.value,
 					password.inputAttributes.value
 				);
 				history.replace("/");
-				console.log(user);
 			} catch (error) {
 				alert(error.message);
 			}

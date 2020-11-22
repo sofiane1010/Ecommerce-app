@@ -29,4 +29,30 @@ export const signUp = (email, password) =>
 export const signIn = (email, password) =>
 	auth.signInWithEmailAndPassword(email, password);
 
+export const createNewDocumentProfile = async (
+	user,
+	otherUserInfo,
+	isGoogle
+) => {
+	const userRef = firestore.doc(`users/${user.uid}`);
+
+	const userDoc = await userRef.get();
+
+	if (!userDoc.exists) {
+		if (isGoogle) {
+			await userRef.set({
+				createdAt: new Date(),
+				email: user.email,
+				fullName: user.displayName,
+			});
+		} else {
+			await userRef.set({
+				createdAt: new Date(),
+				email: user.email,
+				...otherUserInfo,
+			});
+		}
+	}
+};
+
 export default firebase;
