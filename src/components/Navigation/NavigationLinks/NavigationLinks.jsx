@@ -1,9 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import "./NavigationLinks.scss";
 import NavigationLink from "./NavigationLink/NavigationLink";
 
-const NavigationLinks = ({ closeSideDrawer, isAuth }) => {
+let NavigationLinks = ({ closeSideDrawer, isAuth }) => {
 	return (
 		<ul className="links-container">
 			<li className="link">
@@ -38,5 +39,11 @@ const NavigationLinks = ({ closeSideDrawer, isAuth }) => {
 		</ul>
 	);
 };
+
+const mapStateToProps = ({ user }) => ({
+	isAuth: user.currentUser !== null,
+});
+
+NavigationLinks = connect(mapStateToProps)(NavigationLinks);
 
 export default NavigationLinks;

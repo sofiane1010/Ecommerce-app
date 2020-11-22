@@ -17,7 +17,7 @@ if (!firebase.apps.length) {
 }
 
 export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+export const db = firebase.firestore();
 
 const provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().useDeviceLanguage();
@@ -34,20 +34,18 @@ export const createNewDocumentProfile = async (
 	otherUserInfo,
 	isGoogle
 ) => {
-	const userRef = firestore.doc(`users/${user.uid}`);
+	const userRef = db.doc(`users/${user.uid}`);
 
 	const userDoc = await userRef.get();
 
 	if (!userDoc.exists) {
 		if (isGoogle) {
 			await userRef.set({
-				createdAt: new Date(),
 				email: user.email,
 				fullName: user.displayName,
 			});
 		} else {
 			await userRef.set({
-				createdAt: new Date(),
 				email: user.email,
 				...otherUserInfo,
 			});

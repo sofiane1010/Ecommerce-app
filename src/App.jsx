@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { auth } from "./firebase.utils";
+import { db, auth } from "./firebase.utils";
+import { connect } from "react-redux";
+import * as action from "./redux/actions";
 
-import Loader from "./components/UI/Loader/Loader";
 import Layout from "./hoc/Layout/Layout";
 import Shop from "./pages/Shop/Shop";
 import Auth from "./pages/Auth/Auth";
@@ -11,38 +12,45 @@ import Signout from "./pages/Auth/Signout/Signout";
 import "./App.scss";
 
 class App extends Component {
-	state = {
-		user: null,
-		loading: true,
-	};
-
 	componentDidMount() {
-		this.unsubscribe = auth.onAuthStateChanged((user) => {
-			this.setState({ user: user, loading: false });
+		const { setCurrentUser } = this.props;
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				const userRef = db.doc(`users/${user.uid}`);
+				userRef.onSnapshot((snapshot) => {
+					setCurrentUser({
+						id: snapshot.id,
+						...snapshot.data(),
+					});
+				});
+			} else setCurrentUser(null);
 		});
 	}
-
-	componentWillUnmout() {
-		this.unsubscribe();
-	}
-
 	render() {
-		const { user, loading } = this.state;
-		const app = loading ? (
-			<Loader fullScreen />
-		) : (
-			<Layout user={user}>
+		const { isAuth } = this.props;
+		return (
+			<Layout>
 				<Switch>
 					<Route path="/signout" component={Signout} />
-					<Route path="/auth" component={Auth} />
+					<Route
+						path="/auth"
+						render={() => (isAuth ? <Redirect to="/" /> : <Auth />)}
+					/>
 					<Route path="/shop" component={Shop} />
 					<Route exact path="/" component={Home} />
 					<Redirect to="/" />
 				</Switch>
 			</Layout>
 		);
-		return app;
 	}
 }
 
+const mapStateToProps = ({ user }) => ({
+	isAuth: user.currentUser,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	setCurrentUser: (user) => dispatch(action.setCurrentUser(user)),
+});
+App = connect(mapStateToProps, mapDispatchToProps)(App);
 export default App;
