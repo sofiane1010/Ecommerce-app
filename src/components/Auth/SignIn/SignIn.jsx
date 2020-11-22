@@ -4,11 +4,11 @@ import {
 	signIn,
 	createNewDocumentProfile,
 } from "../../../firebase.utils";
-import { withRouter } from "react-router";
 
 import "./SignIn.scss";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
+import Loader from "../../UI/Loader/Loader";
 
 const patterns = {
 	email: /^([\w-.éèçà]+)@([\w-]+)\.([a-zéèçà]{2,8})(\.[a-zéèçà]{2,8})*$/,
@@ -49,6 +49,8 @@ class SignIn extends Component {
 				errorMessage: "**Must contain at least 6 alphanumeric caracters**",
 			},
 		},
+		loading: false,
+		error: null,
 	};
 
 	updateInputValue = (e) => {
@@ -77,19 +79,16 @@ class SignIn extends Component {
 	};
 
 	handleSignInWithGoogle = async () => {
-		const { history } = this.props;
 		try {
 			const { user } = await signInWithGoogle();
 			await createNewDocumentProfile(user, null, true);
-			history.replace("/");
 		} catch (error) {
-			alert(error.message);
+			console.error(error.message);
 		}
 	};
 
 	handleSubmit = async (e) => {
 		e.preventDefault();
-		const { history } = this.props;
 		const { formInputs } = this.state;
 		const { email, password } = formInputs;
 		const updatedFormInputs = this.checkFormValidity(formInputs);
@@ -98,29 +97,36 @@ class SignIn extends Component {
 			.every((isValid) => isValid);
 		this.setState({ formInputs: updatedFormInputs });
 		if (formIsValid) {
+			this.setState({ loading: true });
 			try {
 				await signIn(
 					email.inputAttributes.value,
 					password.inputAttributes.value
 				);
-				history.replace("/");
 			} catch (error) {
-				alert(error.message);
+				this.setState({ loading: false, error: error.message });
 			}
 		}
 	};
 
 	render() {
-		const { formInputs } = this.state;
+		const { formInputs, loading, error } = this.state;
 		const inputForm = Object.entries(formInputs).map(([key, value]) => (
 			<Input key={key} {...value} />
 		));
-		return (
+		console.log(this.state);
+		const errorMessage = error ? (
+			<p className="error-form-message">{error}</p>
+		) : null;
+		const signInForm = loading ? (
+			<Loader />
+		) : (
 			<div className="sign-in">
 				<h2>I already have an account</h2>
 				<span>Sign in with your email and password</span>
 				<form onSubmit={(e) => this.handleSubmit(e)}>
 					{inputForm}
+					{errorMessage}
 					<Button type="submit" color="black">
 						Sign in
 					</Button>
@@ -134,7 +140,8 @@ class SignIn extends Component {
 				</form>
 			</div>
 		);
+		return signInForm;
 	}
 }
 
-export default withRouter(SignIn);
+export default SignIn;

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { signUp, createNewDocumentProfile } from "../../../firebase.utils";
-import { withRouter } from "react-router";
 
 import "./SignUp.scss";
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
+import Loader from "../../UI/Loader/Loader";
 
 const patterns = {
 	fullName: /^[a-zéèçà]+ [a-zéèçà]+$/i,
@@ -76,6 +76,8 @@ class SignUp extends Component {
 				errorMessage: "**Password doesn't match**",
 			},
 		},
+		loading: false,
+		error: null,
 	};
 
 	checkInputValidity = (regex, value) => regex.test(value);
@@ -100,15 +102,14 @@ class SignUp extends Component {
 	handleSubmit = async (e) => {
 		e.preventDefault();
 		const { formInputs } = this.state;
-		const { history } = this.props;
 		const { email, password, fullName } = formInputs;
 		const updatedFormInputs = this.checkFormValidity(formInputs);
 		const formIsValid = Object.values(updatedFormInputs)
 			.map(({ isValid }) => isValid)
 			.every((isValid) => isValid);
 		this.setState({ formInputs: updatedFormInputs });
-
 		if (formIsValid) {
+			this.setState({ loading: true });
 			try {
 				const { user } = await signUp(
 					email.inputAttributes.value,
@@ -117,9 +118,8 @@ class SignUp extends Component {
 				await createNewDocumentProfile(user, {
 					fullName: fullName.inputAttributes.value,
 				});
-				history.replace("/");
 			} catch (error) {
-				alert(error.message);
+				this.setState({ loading: false, error: error.message });
 			}
 		}
 	};
@@ -136,22 +136,29 @@ class SignUp extends Component {
 	};
 
 	render() {
-		const { formInputs } = this.state;
+		const { formInputs, loading, error } = this.state;
 		const inputForm = Object.entries(formInputs).map(([key, value]) => (
 			<Input key={key} {...value} />
 		));
-		return (
+		const errorMessage = error ? (
+			<p className="error-form-message">{error}</p>
+		) : null;
+		const signUpForm = loading ? (
+			<Loader />
+		) : (
 			<div className="sign-up">
 				<h2>I don't have an account yet</h2>
 				<span>Sign up</span>
 				<form onSubmit={this.handleSubmit}>
 					{inputForm}
+					{errorMessage}
 					<Button type="submit" color="black">
 						Sign up
 					</Button>
 				</form>
 			</div>
 		);
+		return signUpForm;
 	}
 }
-export default withRouter(SignUp);
+export default SignUp;
