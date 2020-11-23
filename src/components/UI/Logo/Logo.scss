@@ -11,3 +11,11 @@
 		padding: 30px;
 	}
 }
+
+@media (max-width: 720px) {
+	.logo-container {
+		&:not(.sideDrawer) {
+			padding: 0 10px;
+		}
+	}
+}

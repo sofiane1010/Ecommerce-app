@@ -6,7 +6,7 @@ import "./BasketDropDown.scss";
 import * as action from "../../redux/actions";
 import Button from "../UI/Button/Button";
 import BasketItem from "./BasketItem/BasketItem";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 let BasketDropDown = ({
 	show,
@@ -14,6 +14,8 @@ let BasketDropDown = ({
 	addItem,
 	removeItem,
 	toggleBasketDropDown,
+	history,
+	numberOfItems,
 }) => {
 	const classes = ["basket-dropdown", show ? "active" : null];
 	return (
@@ -32,18 +34,15 @@ let BasketDropDown = ({
 					<span className="empty-message">There is no items in the basket</span>
 				)}
 			</div>
-			<Button color="black" onClick={toggleBasketDropDown}>
-				<Link
-					to="/checkout"
-					style={{
-						textDecoration: "none",
-						color: "inherit",
-						backgroundColor: "inherit",
-						height: "48px",
-					}}
-				>
-					Go to checkout !
-				</Link>
+			<Button
+				color="black"
+				onClick={() => {
+					toggleBasketDropDown();
+					history.push("/checkout");
+				}}
+				disabled={!numberOfItems}
+			>
+				Go to checkout !
 			</Button>
 		</div>
 	);
@@ -51,12 +50,15 @@ let BasketDropDown = ({
 
 const mapStateToProps = (state) => ({
 	basketItems: state.shop.basketItems,
+	numberOfItems: state.shop.numberOfItems,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	addItem: (item) => dispatch(action.addItem(item)),
 	removeItem: (item) => dispatch(action.removeItem(item)),
 });
-BasketDropDown = connect(mapStateToProps, mapDispatchToProps)(BasketDropDown);
+BasketDropDown = withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(BasketDropDown)
+);
 
 export default BasketDropDown;

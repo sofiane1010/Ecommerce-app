@@ -19,7 +19,7 @@
 	&.black {
 		background-color: black;
 		border: 1px solid black;
-		&:hover {
+		&:hover:not(:disabled) {
 			background-color: white;
 			color: black;
 		}
@@ -41,5 +41,11 @@
 			background-color: black;
 			color: white;
 		}
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		background: rgb(168, 168, 168);
+		border: none;
 	}
 }
