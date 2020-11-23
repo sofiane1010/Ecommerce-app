@@ -7,16 +7,18 @@ import BasketDropDown from "../../BasketDropDown/BasketDropDown";
 import "./Header.scss";
 
 const Header = ({ closeSideDrawer, showBasket, toggleBasketDropDown }) => (
-	<header className="header">
-		<BurgerMenu clicked={closeSideDrawer} />
-		<Logo />
-		<nav className="nav-bar">
-			<NavigationLinks toggleBasket={toggleBasketDropDown} />
-		</nav>
-		<BasketDropDown
-			show={showBasket}
-			toggleBasketDropDown={toggleBasketDropDown}
-		/>
+	<header>
+		<div className="header">
+			<BurgerMenu clicked={closeSideDrawer} />
+			<Logo />
+			<nav className="nav-bar">
+				<NavigationLinks toggleBasket={toggleBasketDropDown} />
+			</nav>
+			<BasketDropDown
+				show={showBasket}
+				toggleBasketDropDown={toggleBasketDropDown}
+			/>
+		</div>
 	</header>
 );
 

@@ -1,20 +1,23 @@
-.header {
-	height: 100px;
+header {
 	width: 100%;
-	max-width: 1300px;
-	margin: auto;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: white;
-	box-sizing: border-box;
-	padding: 0 20px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 4;
-	.nav-bar {
-		height: 100%;
+	background-color: white;
+	.header {
+		height: 100px;
+		width: 100%;
+		max-width: 1300px;
+		margin: auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		box-sizing: border-box;
+		padding: 0 20px;
+		.nav-bar {
+			height: 100%;
+		}
 	}
 }
 
