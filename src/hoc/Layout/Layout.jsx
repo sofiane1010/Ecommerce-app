@@ -6,6 +6,7 @@ import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
 class Layout extends Component {
 	state = {
 		showSideDrawer: false,
+		showBasketDropDown: false,
 	};
 
 	handleCloseSideDrawer = () => {
@@ -13,12 +14,20 @@ class Layout extends Component {
 			showSideDrawer: !prevState.showSideDrawer,
 		}));
 	};
+
+	handleBasketDropDownState = () => {
+		this.setState((prevState) => ({
+			showBasketDropDown: !prevState.showBasketDropDown,
+		}));
+	};
 	render() {
 		const { children, user } = this.props;
-		const { showSideDrawer } = this.state;
+		const { showSideDrawer, showBasketDropDown } = this.state;
 		return (
 			<Fragment>
 				<Header
+					showBasket={showBasketDropDown}
+					toggleBasketDropDown={this.handleBasketDropDownState}
 					closeSideDrawer={this.handleCloseSideDrawer}
 					isAuth={user !== null}
 				/>
