@@ -14,7 +14,14 @@ import "./App.scss";
 
 class App extends Component {
 	componentDidMount() {
-		const { setCurrentUser } = this.props;
+		const { setCurrentUser, setBasketItems } = this.props;
+		const items = localStorage.getItem("basket-items");
+		const initialItemsState = {
+			basketItems: [],
+			numberOfItems: 0,
+			totalPrice: 0,
+		};
+		setBasketItems(JSON.parse(items) || initialItemsState);
 		auth.onAuthStateChanged((user) => {
 			if (user) {
 				const userRef = db.doc(`users/${user.uid}`);
@@ -26,6 +33,19 @@ class App extends Component {
 				});
 			} else setCurrentUser(null);
 		});
+		window.addEventListener("beforeunload", this.registerItemsInLocalStorage);
+	}
+
+	registerItemsInLocalStorage = () => {
+		const { items } = this.props;
+		localStorage.setItem("basket-items", JSON.stringify(items));
+	};
+
+	componentWillUnmount() {
+		window.removeEventListener(
+			"beforeunload",
+			this.registerItemsInLocalStorage
+		);
 	}
 	render() {
 		const { isAuth } = this.props;
@@ -47,12 +67,14 @@ class App extends Component {
 	}
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, shop }) => ({
 	isAuth: user.currentUser,
+	items: shop,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	setCurrentUser: (user) => dispatch(action.setCurrentUser(user)),
+	setBasketItems: (items) => dispatch(action.setBasketItems(items)),
 });
 App = connect(mapStateToProps, mapDispatchToProps)(App);
 export default App;

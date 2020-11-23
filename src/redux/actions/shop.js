@@ -14,3 +14,8 @@ export const clearItem = (item) => ({
 	type: actionTypes.CLEAR_ITEM,
 	item,
 });
+
+export const setBasketItems = (items) => ({
+	type: actionTypes.SET_BASKET_ITEMS,
+	items,
+});

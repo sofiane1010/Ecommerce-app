@@ -41,6 +41,8 @@ const reducer = (state = initialState, action) => {
 				numberOfItems: handleNumberOfItems(state.numberOfItems, action),
 				totalPrice: handleTotalPrice(state.totalPrice, action),
 			};
+		case actionTypes.SET_BASKET_ITEMS:
+			return action.items;
 		default:
 			return state;
 	}
