@@ -7,19 +7,21 @@ const BasketItem = ({ item, addItem, removeItem }) => {
 	return (
 		<div className="basket-item">
 			<img src={imageUrl} alt={name} />
-			<div className="quantity-container">
-				<span
-					className="quantity-controls"
-					onClick={() => removeItem(item)}
-				></span>
-				<span className="quantity">x{qt}</span>
-				<span
-					className="quantity-controls"
-					onClick={() => addItem(item)}
-				></span>
+			<div className="details">
+				<span className="name">{name}</span>
+				<div className="quantity-container">
+					<span
+						className="quantity-controls"
+						onClick={() => removeItem(item)}
+					></span>
+					<span className="quantity">x{qt}</span>
+					<span
+						className="quantity-controls"
+						onClick={() => addItem(item)}
+					></span>
+				</div>
 			</div>
-
-			<span className="price">{price}$</span>
+			<span className="price">{price * qt}$</span>
 		</div>
 	);
 };

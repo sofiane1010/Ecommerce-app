@@ -9,6 +9,7 @@ import Shop from "./pages/Shop/Shop";
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
 import Signout from "./pages/Auth/Signout/Signout";
+import Checkout from "./pages/Checkout/Checkout";
 import "./App.scss";
 
 class App extends Component {
@@ -36,6 +37,7 @@ class App extends Component {
 						path="/auth"
 						render={() => (isAuth ? <Redirect to="/" /> : <Auth />)}
 					/>
+					<Route path="/checkout" component={Checkout} />
 					<Route path="/shop" component={Shop} />
 					<Route exact path="/" component={Home} />
 					<Redirect to="/" />

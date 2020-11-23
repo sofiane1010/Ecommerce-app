@@ -13,7 +13,10 @@ const Header = ({ closeSideDrawer, showBasket, toggleBasketDropDown }) => (
 		<nav className="nav-bar">
 			<NavigationLinks toggleBasket={toggleBasketDropDown} />
 		</nav>
-		<BasketDropDown show={showBasket} />
+		<BasketDropDown
+			show={showBasket}
+			toggleBasketDropDown={toggleBasketDropDown}
+		/>
 	</header>
 );
 
