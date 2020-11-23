@@ -13,6 +13,8 @@
 	outline: none;
 	cursor: pointer;
 	margin: 10px;
+	display: flex;
+	justify-content: center;
 
 	&.black {
 		background-color: black;
@@ -29,6 +31,15 @@
 			background-color: white;
 			color: $orange;
 			border: 1px solid $orange;
+		}
+	}
+
+	&.white {
+		background-color: white;
+		color: black;
+		&:hover {
+			background-color: black;
+			color: white;
 		}
 	}
 }
