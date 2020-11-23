@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from "react";
 import "./Shop.scss";
 
-import { SHOP_DATA as collections } from "./shop-data";
+import SHOP_DATA from "./shop-data";
 import CollectionPreview from "../../components/CollectionPreview/CollectionPreview";
 
 const Shop = () => {
@@ -13,7 +13,7 @@ const Shop = () => {
 	}, []);
 	return (
 		<div className="shop-page">
-			{collections.map(({ id, ...otherCollectionProps }) => (
+			{SHOP_DATA.map(({ id, ...otherCollectionProps }) => (
 				<CollectionPreview
 					viewPortWidth={width}
 					key={id}

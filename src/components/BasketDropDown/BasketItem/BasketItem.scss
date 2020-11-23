@@ -1,0 +1,37 @@
+.basket-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 15px;
+	position: relative;
+	margin-right: 10px;
+	.quantity-container {
+		display: flex;
+		align-items: center;
+		.quantity {
+			font-weight: bold;
+			display: inline-block;
+			margin: 0 5px;
+		}
+
+		.quantity-controls {
+			border-bottom: 3.5px solid black;
+			border-right: 3.5px solid black;
+			display: block;
+			height: 10px;
+			width: 10px;
+			transform: rotate(-45deg);
+
+			&:first-child {
+				transform: rotate(135deg);
+			}
+		}
+	}
+
+	.price {
+		font-weight: bold;
+	}
+	img {
+		width: 30%;
+	}
+}
