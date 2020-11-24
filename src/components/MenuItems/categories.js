@@ -1,4 +1,4 @@
-export const categories = [
+const categories = [
 	{
 		title: "hats",
 		imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
@@ -27,3 +27,5 @@ export const categories = [
 		size: "large",
 	},
 ];
+
+export default categories;
