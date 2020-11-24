@@ -3,6 +3,7 @@ import "./Shop.scss";
 import { Route } from "react-router-dom";
 import CollectionsOverview from "../../components/CollectionsOverview/CollectionsOverview";
 import CategoryCollection from "../../components/CategoryCollection/CategoryCollection";
+
 const Shop = ({ match }) => {
 	const [width, setWidth] = useState(window.innerWidth);
 	useLayoutEffect(() => {

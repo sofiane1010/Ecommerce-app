@@ -35,7 +35,7 @@ let Checkout = ({ items, totalPrice, addItem, removeItem, clearItem }) => {
 					clearItem={clearItem}
 				/>
 			))}
-			<div className="total">Total Price: {totalPrice}$</div>
+			<div className="total">Total Price: ${totalPrice}</div>
 		</div>
 	);
 };

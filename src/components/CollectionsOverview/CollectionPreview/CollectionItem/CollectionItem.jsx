@@ -13,7 +13,7 @@ const collectionItem = ({ item, dispatch }) => {
 			<div className="image" style={{ backgroundImage: `url(${imageUrl})` }} />
 			<div className="collection-footer">
 				<span className="name">{name}</span>
-				<span className="price">{price}$</span>
+				<span className="price">${price}</span>
 			</div>
 			<Button color="white" onClick={() => dispatch(action.addItem(item))}>
 				Add to basket

@@ -15,8 +15,12 @@ header {
 		align-items: center;
 		box-sizing: border-box;
 		padding: 0 20px;
-		.nav-bar {
-			height: 100%;
+		.nav-container {
+			display: flex;
+			align-items: center;
+			.nav-bar {
+				height: 100%;
+			}
 		}
 	}
 }

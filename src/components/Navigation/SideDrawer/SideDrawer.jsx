@@ -11,7 +11,7 @@ const SideDrawer = ({ show, close }) => {
 		<Fragment>
 			<BackDrop show={show} clicked={close} />
 			<div className={classes.join(" ")}>
-				<Logo sideDrawer={true} closeSideDrawer={close} />
+				<Logo sideDrawer closeSideDrawer={close} />
 				<nav>
 					<NavigationLinks closeSideDrawer={close} />
 				</nav>

@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 
 import "./NavigationLinks.scss";
 import NavigationLink from "./NavigationLink/NavigationLink";
-import BasketIcon from "../../UI/BasketIcon/BasketIcon";
 
-let NavigationLinks = ({ closeSideDrawer, isAuth, toggleBasket }) => {
+let NavigationLinks = ({ closeSideDrawer, isAuth }) => {
 	return (
 		<ul className="links-container">
 			<li className="link">
@@ -43,9 +42,6 @@ let NavigationLinks = ({ closeSideDrawer, isAuth, toggleBasket }) => {
 						closeSideDrawer={closeSideDrawer}
 					/>
 				)}
-			</li>
-			<li className="link basket">
-				<BasketIcon clicked={toggleBasket} />
 			</li>
 		</ul>
 	);

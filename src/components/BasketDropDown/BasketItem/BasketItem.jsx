@@ -21,7 +21,7 @@ const BasketItem = ({ item, addItem, removeItem }) => {
 					></span>
 				</div>
 			</div>
-			<span className="price">{price * qt}$</span>
+			<span className="price">${price * qt}</span>
 		</div>
 	);
 };
