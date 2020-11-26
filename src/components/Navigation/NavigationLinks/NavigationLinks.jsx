@@ -21,13 +21,6 @@ let NavigationLinks = ({ closeSideDrawer, isAuth }) => {
 					closeSideDrawer={closeSideDrawer}
 				/>
 			</li>
-			<li className="link checkout">
-				<NavigationLink
-					path="/checkout"
-					option="CHECKOUT"
-					closeSideDrawer={closeSideDrawer}
-				/>
-			</li>
 			<li className="link">
 				{isAuth ? (
 					<NavigationLink

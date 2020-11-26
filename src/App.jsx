@@ -48,7 +48,7 @@ class App extends Component {
 		);
 	}
 	render() {
-		const { isAuth } = this.props;
+		const { isAuth, items } = this.props;
 		return (
 			<Layout>
 				<Switch>
@@ -57,7 +57,12 @@ class App extends Component {
 						path="/auth"
 						render={() => (isAuth ? <Redirect to="/" /> : <Auth />)}
 					/>
-					<Route path="/checkout" component={Checkout} />
+					<Route
+						path="/checkout"
+						render={() =>
+							items.numberOfItems ? <Checkout /> : <Redirect to="/" />
+						}
+					/>
 					<Route path="/shop" component={Shop} />
 					<Route exact path="/" component={Home} />
 					<Redirect to="/" />
