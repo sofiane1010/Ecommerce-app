@@ -43,6 +43,8 @@ const reducer = (state = initialState, action) => {
 			};
 		case actionTypes.SET_BASKET_ITEMS:
 			return action.items;
+		case actionTypes.EMPTY_BASKET:
+			return initialState;
 		default:
 			return state;
 	}

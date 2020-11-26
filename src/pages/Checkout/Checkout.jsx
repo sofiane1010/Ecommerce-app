@@ -5,8 +5,16 @@ import "./Checkout.scss";
 
 import CheckoutItem from "../../components/CheckoutItem/CheckoutItem";
 import * as action from "../../redux/actions";
+import StripeButton from "../../components/StripeCheckout/StripeCheckout";
 
-let Checkout = ({ items, totalPrice, addItem, removeItem, clearItem }) => {
+let Checkout = ({
+	items,
+	totalPrice,
+	addItem,
+	removeItem,
+	clearItem,
+	emptyBasket,
+}) => {
 	return (
 		<div className="checkout-page">
 			<div className="checkout-header">
@@ -36,6 +44,15 @@ let Checkout = ({ items, totalPrice, addItem, removeItem, clearItem }) => {
 				/>
 			))}
 			<div className="total">Total Price: ${totalPrice}</div>
+			<div className="test-warning">
+				*Please use one of the following test credit cards for payments* <br />
+				VISA : 4242 4242 4242 4242 - Exp: 01/22 - CVC: 123
+				<br />
+				MASTERCARD : 5555 5555 5555 4444 - Exp : 01/22 - CVC: 123
+				<br />
+				AMERICAN EXPRESS : 3782 822463 10005 - Exp : 01/22 - CVC: 1234
+			</div>
+			<StripeButton price={totalPrice} emptyBasket={emptyBasket} />
 		</div>
 	);
 };
@@ -49,6 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 	addItem: (item) => dispatch(action.addItem(item)),
 	removeItem: (item) => dispatch(action.removeItem(item)),
 	clearItem: (item) => dispatch(action.clearItem(item)),
+	emptyBasket: () => dispatch(action.emptyBasket()),
 });
 
 Checkout = connect(mapStateToProps, mapDispatchToProps)(Checkout);

@@ -19,3 +19,7 @@ export const setBasketItems = (items) => ({
 	type: actionTypes.SET_BASKET_ITEMS,
 	items,
 });
+
+export const emptyBasket = () => ({
+	type: actionTypes.EMPTY_BASKET,
+});
