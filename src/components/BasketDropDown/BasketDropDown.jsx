@@ -49,8 +49,8 @@ let BasketDropDown = ({
 };
 
 const mapStateToProps = (state) => ({
-	basketItems: state.shop.basketItems,
-	numberOfItems: state.shop.numberOfItems,
+	basketItems: state.basket.basketItems,
+	numberOfItems: state.basket.numberOfItems,
 });
 
 const mapDispatchToProps = (dispatch) => ({

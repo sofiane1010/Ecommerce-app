@@ -11,6 +11,7 @@ const Shop = ({ match }) => {
 		window.addEventListener("resize", onResize);
 		return () => window.removeEventListener("resize", onResize);
 	}, []);
+
 	return (
 		<div className="shop-page">
 			<Route

@@ -15,7 +15,7 @@ let BasketIcon = ({ clicked, numberOfItems }) => {
 };
 
 const mapStateToProps = (state) => ({
-	numberOfItems: state.shop.numberOfItems,
+	numberOfItems: state.basket.numberOfItems,
 });
 
 BasketIcon = connect(mapStateToProps)(BasketIcon);

@@ -1,13 +1,12 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import "./CategoryCollection.scss";
-import SHOP_DATA from "../../pages/Shop/shop-data";
 import CollectionItem from "../CollectionsOverview/CollectionPreview/CollectionItem/CollectionItem";
 import { Redirect } from "react-router-dom";
 
-const CategoryCollection = ({ match }) => {
-	const categoryItems = SHOP_DATA.find(
-		(category) => category.routeName === match.params.categoryId
+let CategoryCollection = ({ match, collections }) => {
+	const categoryItems = collections.find(
+		(category) => category.title.toLowerCase() === match.params.categoryId
 	);
 	const catergoryRendered = categoryItems ? (
 		categoryItems.items.map((item) => (
@@ -24,4 +23,8 @@ const CategoryCollection = ({ match }) => {
 	);
 };
 
-export default CategoryCollection;
+const mapStateToProps = ({ shop }) => ({
+	collections: shop.collections,
+});
+
+export default connect(mapStateToProps)(CategoryCollection);

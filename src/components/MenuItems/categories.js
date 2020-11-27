@@ -22,14 +22,14 @@ const categories = [
 		imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
 		id: 4,
 		size: "large",
-		linkUrl: "/shop/womens",
+		linkUrl: "/shop/women",
 	},
 	{
 		title: "mens",
 		imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
 		id: 5,
 		size: "large",
-		linkUrl: "/shop/mens",
+		linkUrl: "/shop/men",
 	},
 ];
 

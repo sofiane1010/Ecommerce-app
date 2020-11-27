@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { db, auth } from "./firebase.utils";
+import { db, auth, getCollectionsDocuments } from "./firebase.utils";
 import { connect } from "react-redux";
 import * as action from "./redux/actions";
 
@@ -14,7 +14,7 @@ import "./App.scss";
 
 class App extends Component {
 	componentDidMount() {
-		const { setCurrentUser, setBasketItems } = this.props;
+		const { setCurrentUser, setBasketItems, setCollections } = this.props;
 		const items = localStorage.getItem("basket-items");
 		const initialItemsState = {
 			basketItems: [],
@@ -22,7 +22,7 @@ class App extends Component {
 			totalPrice: 0,
 		};
 		setBasketItems(JSON.parse(items) || initialItemsState);
-		auth.onAuthStateChanged((user) => {
+		auth.onAuthStateChanged(async (user) => {
 			if (user) {
 				const userRef = db.doc(`users/${user.uid}`);
 				userRef.onSnapshot((snapshot) => {
@@ -34,6 +34,9 @@ class App extends Component {
 			} else setCurrentUser(null);
 		});
 		window.addEventListener("beforeunload", this.registerItemsInLocalStorage);
+		getCollectionsDocuments().then((collections) =>
+			setCollections(collections)
+		);
 	}
 
 	registerItemsInLocalStorage = () => {
@@ -72,14 +75,15 @@ class App extends Component {
 	}
 }
 
-const mapStateToProps = ({ user, shop }) => ({
+const mapStateToProps = ({ user, basket }) => ({
 	isAuth: user.currentUser,
-	items: shop,
+	items: basket,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	setCurrentUser: (user) => dispatch(action.setCurrentUser(user)),
 	setBasketItems: (items) => dispatch(action.setBasketItems(items)),
+	setCollections: (collections) => dispatch(action.setCollections(collections)),
 });
 App = connect(mapStateToProps, mapDispatchToProps)(App);
 export default App;

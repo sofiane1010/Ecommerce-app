@@ -1,12 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 
-import SHOP_DATA from "../../pages/Shop/shop-data";
 import CollectionPreview from "./CollectionPreview/CollectionPreview";
 
-const collectionOverview = ({ width }) => {
+let CollectionOverview = ({ width, SHOP_DATA }) => {
+	console.log(SHOP_DATA);
 	return (
 		<div className="collection-overview">
-			{SHOP_DATA.map(({ id, ...otherCollectionProps }) => (
+			{(SHOP_DATA || []).map(({ id, ...otherCollectionProps }) => (
 				<CollectionPreview
 					viewPortWidth={width}
 					key={id}
@@ -17,4 +18,10 @@ const collectionOverview = ({ width }) => {
 	);
 };
 
-export default collectionOverview;
+const mapStateToProps = ({ shop }) => ({
+	SHOP_DATA: shop.collections,
+});
+
+CollectionOverview = connect(mapStateToProps)(CollectionOverview);
+
+export default CollectionOverview;

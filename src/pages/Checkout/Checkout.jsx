@@ -58,8 +58,8 @@ let Checkout = ({
 };
 
 const mapStateToProps = (state) => ({
-	items: state.shop.basketItems,
-	totalPrice: state.shop.totalPrice,
+	items: state.basket.basketItems,
+	totalPrice: state.basket.totalPrice,
 });
 
 const mapDispatchToProps = (dispatch) => ({

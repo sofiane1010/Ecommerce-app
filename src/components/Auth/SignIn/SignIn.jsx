@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
 	signInWithGoogle,
 	signIn,
-	createNewDocumentProfile,
+	createNewPorfileDocument,
 } from "../../../firebase.utils";
 
 import "./SignIn.scss";
@@ -81,7 +81,7 @@ class SignIn extends Component {
 	handleSignInWithGoogle = async () => {
 		try {
 			const { user } = await signInWithGoogle();
-			await createNewDocumentProfile(user, null, true);
+			await createNewPorfileDocument(user, null, true);
 		} catch (error) {
 			console.error(error.message);
 		}

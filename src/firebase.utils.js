@@ -29,7 +29,7 @@ export const signUp = (email, password) =>
 export const signIn = (email, password) =>
 	auth.signInWithEmailAndPassword(email, password);
 
-export const createNewDocumentProfile = async (
+export const createNewPorfileDocument = async (
 	user,
 	otherUserInfo,
 	isGoogle
@@ -51,6 +51,12 @@ export const createNewDocumentProfile = async (
 			});
 		}
 	}
+};
+
+export const getCollectionsDocuments = async () => {
+	const collectionsSnapShot = await db.collection("collections").get();
+	const collections = collectionsSnapShot.docs.map((doc) => doc.data());
+	return collections;
 };
 
 export default firebase;

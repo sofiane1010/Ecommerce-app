@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { signUp, createNewDocumentProfile } from "../../../firebase.utils";
+import { signUp, createNewPorfileDocument } from "../../../firebase.utils";
 
 import "./SignUp.scss";
 import Button from "../../UI/Button/Button";
@@ -115,7 +115,7 @@ class SignUp extends Component {
 					email.inputAttributes.value,
 					password.inputAttributes.value
 				);
-				await createNewDocumentProfile(user, {
+				await createNewPorfileDocument(user, {
 					fullName: fullName.inputAttributes.value,
 				});
 			} catch (error) {
