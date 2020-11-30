@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as action from "../../redux/actions";
+import * as selector from "../../redux/selectors";
 
 import "./Checkout.scss";
 
 import CheckoutItem from "../../components/CheckoutItem/CheckoutItem";
-import * as action from "../../redux/actions";
 import StripeButton from "../../components/StripeCheckout/StripeCheckout";
 
 let Checkout = ({
@@ -58,8 +59,8 @@ let Checkout = ({
 };
 
 const mapStateToProps = (state) => ({
-	items: state.basket.basketItems,
-	totalPrice: state.basket.totalPrice,
+	items: selector.selectBasketItems(state),
+	totalPrice: selector.selectTotalPrice(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

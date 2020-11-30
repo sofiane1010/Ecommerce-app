@@ -1,11 +1,13 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import * as action from "../../../redux/actions";
+import * as selector from "../../../redux/selectors";
 
 import "./SideDrawer.scss";
+
 import BackDrop from "../../UI/BackDrop/BackDrop";
 import NavigationLinks from "../NavigationLinks/NavigationLinks";
 import Logo from "../../UI/Logo/Logo";
-import * as action from "../../../redux/actions";
 
 const SideDrawer = ({ showSideDrawer, toggleSideDrawer }) => {
 	const classes = ["side-drawer", showSideDrawer ? "opened" : null];
@@ -15,7 +17,7 @@ const SideDrawer = ({ showSideDrawer, toggleSideDrawer }) => {
 			<div className={classes.join(" ")}>
 				<Logo sideDrawer closeSideDrawer={toggleSideDrawer} />
 				<nav>
-					<NavigationLinks />
+					<NavigationLinks toggleSideDrawer={toggleSideDrawer} />
 				</nav>
 			</div>
 		</Fragment>
@@ -23,7 +25,7 @@ const SideDrawer = ({ showSideDrawer, toggleSideDrawer }) => {
 };
 
 const mapStateToProps = (state) => ({
-	showSideDrawer: state.sideDrawer.showSideDrawer,
+	showSideDrawer: selector.selectShowSideDrawer(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

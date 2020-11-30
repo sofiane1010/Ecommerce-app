@@ -1,8 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
-import "./CategoryCollection.scss";
-import CollectionItem from "../CollectionsOverview/CollectionPreview/CollectionItem/CollectionItem";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { selectCollections } from "../../redux/selectors";
+
+import "./CategoryCollection.scss";
+
+import CollectionItem from "../CollectionsOverview/CollectionPreview/CollectionItem/CollectionItem";
 
 let CategoryCollection = ({ match, collections }) => {
 	const categoryItems = collections.find(
@@ -23,8 +26,8 @@ let CategoryCollection = ({ match, collections }) => {
 	);
 };
 
-const mapStateToProps = ({ shop }) => ({
-	collections: shop.collections,
+const mapStateToProps = (state) => ({
+	collections: selectCollections(state),
 });
 
 export default connect(mapStateToProps)(CategoryCollection);

@@ -1,12 +1,13 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import * as action from "../../redux/actions";
+import * as selector from "../../redux/selectors";
 
 import "./BasketDropDown.scss";
 
-import * as action from "../../redux/actions";
 import Button from "../UI/Button/Button";
 import BasketItem from "./BasketItem/BasketItem";
-import { withRouter } from "react-router-dom";
 
 let BasketDropDown = ({
 	showBasket,
@@ -49,9 +50,9 @@ let BasketDropDown = ({
 };
 
 const mapStateToProps = (state) => ({
-	basketItems: state.basket.basketItems,
-	numberOfItems: state.basket.numberOfItems,
-	showBasket: state.basket.showBasket,
+	basketItems: selector.selectBasketItems(state),
+	numberOfItems: selector.selectNumberOfItems(state),
+	showBasket: selector.selectShowBasket(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

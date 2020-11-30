@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import { addItem } from "../../../../redux/actions";
 
 import "./CollectionItem.scss";
-import * as action from "../../../../redux/actions";
 
 import Button from "../../../UI/Button/Button";
 
@@ -15,7 +15,7 @@ const collectionItem = ({ item, dispatch }) => {
 				<span className="name">{name}</span>
 				<span className="price">${price}</span>
 			</div>
-			<Button color="white" onClick={() => dispatch(action.addItem(item))}>
+			<Button color="white" onClick={() => dispatch(addItem(item))}>
 				Add to basket
 			</Button>
 		</div>

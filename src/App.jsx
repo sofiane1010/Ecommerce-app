@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { db, auth, getCollectionsDocuments } from "./firebase.utils";
 import { connect } from "react-redux";
 import * as action from "./redux/actions";
+import * as selector from "./redux/selectors";
 
 import Layout from "./hoc/Layout/Layout";
 import Shop from "./pages/Shop/Shop";
@@ -41,8 +42,8 @@ class App extends Component {
 	}
 
 	registerItemsInLocalStorage = () => {
-		const { items } = this.props;
-		localStorage.setItem("basket-items", JSON.stringify(items));
+		const { basket } = this.props;
+		localStorage.setItem("basket-items", JSON.stringify(basket));
 	};
 
 	componentWillUnmount() {
@@ -52,7 +53,7 @@ class App extends Component {
 		);
 	}
 	render() {
-		const { isAuth, items } = this.props;
+		const { isAuth, numberOfItems } = this.props;
 		return (
 			<Layout>
 				<Switch>
@@ -63,7 +64,7 @@ class App extends Component {
 					/>
 					<Route
 						path="/checkout"
-						render={() => (items.length ? <Checkout /> : <Redirect to="/" />)}
+						render={() => (numberOfItems ? <Checkout /> : <Redirect to="/" />)}
 					/>
 					<Route path="/shop" component={Shop} />
 					<Route exact path="/" component={Home} />
@@ -74,9 +75,10 @@ class App extends Component {
 	}
 }
 
-const mapStateToProps = ({ user, basket }) => ({
-	isAuth: user.currentUser !== null,
-	items: basket,
+const mapStateToProps = (state) => ({
+	isAuth: selector.selectCurrentUser(state) !== null,
+	basket: state.basket,
+	numberOfItems: selector.selectNumberOfItems(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
