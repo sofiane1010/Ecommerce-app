@@ -7,22 +7,19 @@ import BasketDropDown from "../../BasketDropDown/BasketDropDown";
 import BasketIcon from "../../UI/BasketIcon/BasketIcon";
 import "./Header.scss";
 
-const Header = ({ closeSideDrawer, showBasket, toggleBasketDropDown }) => (
+const Header = () => (
 	<header>
 		<div className="header">
-			<BurgerMenu clicked={closeSideDrawer} />
+			<BurgerMenu />
 			<Logo />
 			<div className="nav-container">
 				<nav className="nav-bar">
 					<NavigationLinks />
 				</nav>
-				<BasketIcon clicked={toggleBasketDropDown} />
+				<BasketIcon />
 			</div>
 
-			<BasketDropDown
-				show={showBasket}
-				toggleBasketDropDown={toggleBasketDropDown}
-			/>
+			<BasketDropDown />
 		</div>
 	</header>
 );

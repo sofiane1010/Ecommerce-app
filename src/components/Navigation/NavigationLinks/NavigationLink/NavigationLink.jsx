@@ -1,18 +1,21 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+
 import "./NavigationLink.scss";
 
-import { NavLink } from "react-router-dom";
-const NavigationLink = ({ option, path, closeSideDrawer }) => {
+import * as action from "../../../../redux/actions";
+const NavigationLink = ({ option, path, dispatch }) => {
 	return (
 		<NavLink
 			to={path}
 			className="navigation-link"
 			activeClassName="active-link"
-			onClick={closeSideDrawer}
+			onClick={() => dispatch(action.toggleSideDrawer())}
 		>
 			{option}
 		</NavLink>
 	);
 };
 
-export default NavigationLink;
+export default connect()(NavigationLink);

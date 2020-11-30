@@ -1,12 +1,12 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-	collections: [],
+	showSideDrawer: false,
 };
 
 const reducer = (state = initialState, action) => {
-	if (action.type === actionTypes.SET_COLLECTIONS)
-		return { collections: action.collections };
+	if (action.type === actionTypes.TOGGLE_SHOW_SIDE_DRAWER)
+		return { showSideDrawer: !state.showSideDrawer };
 	return state;
 };
 

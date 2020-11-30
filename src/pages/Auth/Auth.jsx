@@ -4,7 +4,7 @@ import "./Auth.scss";
 import SignIn from "../../components/Auth/SignIn/SignIn";
 import SignUp from "../../components/Auth/SignUp/SignUp";
 
-const Auth = (props) => {
+const Auth = () => {
 	return (
 		<div className="auth">
 			<SignIn />

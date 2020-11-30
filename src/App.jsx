@@ -20,6 +20,7 @@ class App extends Component {
 			basketItems: [],
 			numberOfItems: 0,
 			totalPrice: 0,
+			showBasket: false,
 		};
 		setBasketItems(JSON.parse(items) || initialItemsState);
 		auth.onAuthStateChanged(async (user) => {
@@ -62,9 +63,7 @@ class App extends Component {
 					/>
 					<Route
 						path="/checkout"
-						render={() =>
-							items.numberOfItems ? <Checkout /> : <Redirect to="/" />
-						}
+						render={() => (items ? <Checkout /> : <Redirect to="/" />)}
 					/>
 					<Route path="/shop" component={Shop} />
 					<Route exact path="/" component={Home} />
@@ -76,8 +75,8 @@ class App extends Component {
 }
 
 const mapStateToProps = ({ user, basket }) => ({
-	isAuth: user.currentUser,
-	items: basket,
+	isAuth: user.currentUser !== null,
+	items: basket.numberOfItems,
 });
 
 const mapDispatchToProps = (dispatch) => ({

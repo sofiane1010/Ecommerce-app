@@ -23,3 +23,7 @@ export const setBasketItems = (items) => ({
 export const emptyBasket = () => ({
 	type: actionTypes.EMPTY_BASKET,
 });
+
+export const toggleShowBasket = () => ({
+	type: actionTypes.TOGGLE_SHOW_BASKET,
+});

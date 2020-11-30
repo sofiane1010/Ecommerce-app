@@ -9,7 +9,7 @@ import BasketItem from "./BasketItem/BasketItem";
 import { withRouter } from "react-router-dom";
 
 let BasketDropDown = ({
-	show,
+	showBasket,
 	basketItems,
 	addItem,
 	removeItem,
@@ -17,7 +17,7 @@ let BasketDropDown = ({
 	history,
 	numberOfItems,
 }) => {
-	const classes = ["basket-dropdown", show ? "active" : null];
+	const classes = ["basket-dropdown", showBasket ? "active" : null];
 	return (
 		<div className={classes.join(" ")}>
 			<div className="basket-items">
@@ -51,6 +51,7 @@ let BasketDropDown = ({
 const mapStateToProps = (state) => ({
 	basketItems: state.basket.basketItems,
 	numberOfItems: state.basket.numberOfItems,
+	showBasket: state.basket.showBasket,
 });
 
 const mapDispatchToProps = (dispatch) => ({

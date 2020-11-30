@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 
 import CollectionPreview from "./CollectionPreview/CollectionPreview";
 
-let CollectionOverview = ({ width, SHOP_DATA }) => {
-	console.log(SHOP_DATA);
+let CollectionOverview = ({ width, collections }) => {
 	return (
 		<div className="collection-overview">
-			{(SHOP_DATA || []).map(({ id, ...otherCollectionProps }) => (
+			{collections.map(({ id, ...otherCollectionProps }) => (
 				<CollectionPreview
 					viewPortWidth={width}
 					key={id}

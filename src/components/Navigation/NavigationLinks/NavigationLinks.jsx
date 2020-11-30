@@ -4,36 +4,20 @@ import { connect } from "react-redux";
 import "./NavigationLinks.scss";
 import NavigationLink from "./NavigationLink/NavigationLink";
 
-let NavigationLinks = ({ closeSideDrawer, isAuth }) => {
+let NavigationLinks = ({ isAuth }) => {
 	return (
 		<ul className="links-container">
 			<li className="link">
-				<NavigationLink
-					path="/shop"
-					option="SHOP"
-					closeSideDrawer={closeSideDrawer}
-				/>
+				<NavigationLink path="/shop" option="SHOP" />
 			</li>
 			<li className="link">
-				<NavigationLink
-					path="/contact"
-					option="CONTACT"
-					closeSideDrawer={closeSideDrawer}
-				/>
+				<NavigationLink path="/contact" option="CONTACT" />
 			</li>
 			<li className="link">
 				{isAuth ? (
-					<NavigationLink
-						path="/signout"
-						option="SIGN OUT"
-						closeSideDrawer={closeSideDrawer}
-					/>
+					<NavigationLink path="/signout" option="SIGN OUT" />
 				) : (
-					<NavigationLink
-						path="/auth"
-						option="SIGN IN"
-						closeSideDrawer={closeSideDrawer}
-					/>
+					<NavigationLink path="/auth" option="SIGN IN" />
 				)}
 			</li>
 		</ul>
