@@ -63,7 +63,7 @@ class App extends Component {
 					/>
 					<Route
 						path="/checkout"
-						render={() => (items ? <Checkout /> : <Redirect to="/" />)}
+						render={() => (items.length ? <Checkout /> : <Redirect to="/" />)}
 					/>
 					<Route path="/shop" component={Shop} />
 					<Route exact path="/" component={Home} />
@@ -76,7 +76,7 @@ class App extends Component {
 
 const mapStateToProps = ({ user, basket }) => ({
 	isAuth: user.currentUser !== null,
-	items: basket.numberOfItems,
+	items: basket,
 });
 
 const mapDispatchToProps = (dispatch) => ({

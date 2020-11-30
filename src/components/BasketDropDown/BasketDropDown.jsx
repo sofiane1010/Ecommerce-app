@@ -13,7 +13,7 @@ let BasketDropDown = ({
 	basketItems,
 	addItem,
 	removeItem,
-	toggleBasketDropDown,
+	toggleShowBasket,
 	history,
 	numberOfItems,
 }) => {
@@ -37,7 +37,7 @@ let BasketDropDown = ({
 			<Button
 				color="black"
 				onClick={() => {
-					toggleBasketDropDown();
+					toggleShowBasket();
 					history.push("/checkout");
 				}}
 				disabled={!numberOfItems}
@@ -57,6 +57,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	addItem: (item) => dispatch(action.addItem(item)),
 	removeItem: (item) => dispatch(action.removeItem(item)),
+	toggleShowBasket: () => dispatch(action.toggleShowBasket()),
 });
 BasketDropDown = withRouter(
 	connect(mapStateToProps, mapDispatchToProps)(BasketDropDown)

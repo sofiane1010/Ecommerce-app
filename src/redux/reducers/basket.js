@@ -36,7 +36,6 @@ const handleTotalPrice = (state, action) => {
 };
 
 const handleShowBasket = (state, action) => {
-	console.log("here");
 	if (action.type === actionTypes.TOGGLE_SHOW_BASKET) return !state;
 	return state;
 };
