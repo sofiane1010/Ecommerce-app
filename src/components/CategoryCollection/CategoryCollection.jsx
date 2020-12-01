@@ -8,9 +8,7 @@ import "./CategoryCollection.scss";
 import CollectionItem from "../CollectionsOverview/CollectionPreview/CollectionItem/CollectionItem";
 
 let CategoryCollection = ({ match, collections }) => {
-	const categoryItems = collections.find(
-		(category) => category.title.toLowerCase() === match.params.categoryId
-	);
+	const categoryItems = collections[match.params.categoryId];
 	const catergoryRendered = categoryItems ? (
 		categoryItems.items.map((item) => (
 			<CollectionItem key={item.id} item={item} />

@@ -55,7 +55,13 @@ export const createNewPorfileDocument = async (
 
 export const getCollectionsDocuments = async () => {
 	const collectionsSnapShot = await db.collection("collections").get();
-	const collections = collectionsSnapShot.docs.map((doc) => doc.data());
+	const collections = collectionsSnapShot.docs
+		.map((doc) => doc.data())
+		.reduce((obj, value) => {
+			value.routeName = value.title.toLowerCase();
+			obj[value.routeName] = value;
+			return obj;
+		}, {});
 	return collections;
 };
 

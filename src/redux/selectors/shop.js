@@ -6,3 +6,8 @@ export const selectCollections = createSelector(
 	[selectShop],
 	(shop) => shop.collections
 );
+
+export const selectCollectionsArray = createSelector(
+	[selectCollections],
+	(collections) => Object.values(collections)
+);

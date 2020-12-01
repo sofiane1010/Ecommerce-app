@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectCollections } from "../../redux/selectors";
+import { selectCollectionsArray } from "../../redux/selectors/shop";
 
 import CollectionPreview from "./CollectionPreview/CollectionPreview";
 
@@ -19,7 +19,7 @@ let CollectionOverview = ({ width, collections }) => {
 };
 
 const mapStateToProps = (state) => ({
-	collections: selectCollections(state),
+	collections: selectCollectionsArray(state),
 });
 
 CollectionOverview = connect(mapStateToProps)(CollectionOverview);

@@ -5,7 +5,14 @@ import "./CollectionPreview.scss";
 
 import CollectionItem from "./CollectionItem/CollectionItem";
 
-let CollectionPreview = ({ title, items, viewPortWidth, history, match }) => {
+let CollectionPreview = ({
+	routeName,
+	title,
+	items,
+	viewPortWidth,
+	history,
+	match,
+}) => {
 	let numberOfItems;
 	if (viewPortWidth < 650) numberOfItems = 2;
 	else if (viewPortWidth > 900) numberOfItems = 4;
@@ -14,7 +21,7 @@ let CollectionPreview = ({ title, items, viewPortWidth, history, match }) => {
 		<div className="collection-preview">
 			<h1
 				className="title"
-				onClick={() => history.push(`${match.path}/${title.toLowerCase()}`)}
+				onClick={() => history.push(`${match.path}/${routeName}`)}
 			>
 				{title.toUpperCase()}
 			</h1>
