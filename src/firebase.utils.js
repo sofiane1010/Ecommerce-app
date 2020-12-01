@@ -53,12 +53,14 @@ export const createNewPorfileDocument = async (
 	}
 };
 
-export const getCollectionsDocuments = async () => {
-	const collectionsSnapShot = await db.collection("collections").get();
+export const convertCollectionsSnapshotToMap = (collectionsSnapShot) => {
 	const collections = collectionsSnapShot.docs
-		.map((doc) => doc.data())
-		.reduce((obj, value) => {
-			value.routeName = value.title.toLowerCase();
+		.map((doc) => {
+			return [doc.id, doc.data()];
+		})
+		.reduce((obj, [id, value]) => {
+			value.routeName = encodeURI(value.title.toLowerCase());
+			value.id = id;
 			obj[value.routeName] = value;
 			return obj;
 		}, {});

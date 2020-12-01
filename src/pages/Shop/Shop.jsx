@@ -1,16 +1,36 @@
-import React, { useState, useLayoutEffect } from "react";
-import "./Shop.scss";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { Route } from "react-router-dom";
+import { connect } from "react-redux";
+
+import "./Shop.scss";
+
+import { convertCollectionsSnapshotToMap, db } from "../../firebase.utils";
+import { selectCollectionsArray } from "../../redux/selectors";
 import CollectionsOverview from "../../components/CollectionsOverview/CollectionsOverview";
 import CategoryCollection from "../../components/CategoryCollection/CategoryCollection";
+import { setCollections } from "../../redux/actions";
 
-const Shop = ({ match }) => {
+const Shop = ({ match, collections, dispatch }) => {
 	const [width, setWidth] = useState(window.innerWidth);
 	useLayoutEffect(() => {
 		const onResize = () => setWidth(window.innerWidth);
 		window.addEventListener("resize", onResize);
 		return () => window.removeEventListener("resize", onResize);
 	}, []);
+
+	useEffect(() => {
+		let unsubscribeFromDb;
+		if (!collections.length) {
+			const collectionsRef = db.collection("collections");
+			unsubscribeFromDb = collectionsRef.onSnapshot((collectionsSnapShot) => {
+				const collections = convertCollectionsSnapshotToMap(
+					collectionsSnapShot
+				);
+				dispatch(setCollections(collections));
+			});
+		}
+		return () => unsubscribeFromDb();
+	}, [collections, dispatch]);
 
 	return (
 		<div className="shop-page">
@@ -27,4 +47,8 @@ const Shop = ({ match }) => {
 	);
 };
 
-export default Shop;
+const mapStateToProps = (state) => ({
+	collections: selectCollectionsArray(state),
+});
+
+export default connect(mapStateToProps)(Shop);

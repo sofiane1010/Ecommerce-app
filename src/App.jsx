@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { db, auth, getCollectionsDocuments } from "./firebase.utils";
+import { db, auth } from "./firebase.utils";
 import { connect } from "react-redux";
 import * as action from "./redux/actions";
 import * as selector from "./redux/selectors";
@@ -15,7 +15,7 @@ import "./App.scss";
 
 class App extends Component {
 	componentDidMount() {
-		const { setCurrentUser, setBasketItems, setCollections } = this.props;
+		const { setCurrentUser, setBasketItems } = this.props;
 		const items = localStorage.getItem("basket-items");
 		const initialItemsState = {
 			basketItems: [],
@@ -36,9 +36,6 @@ class App extends Component {
 			} else setCurrentUser(null);
 		});
 		window.addEventListener("beforeunload", this.registerItemsInLocalStorage);
-		getCollectionsDocuments().then((collections) =>
-			setCollections(collections)
-		);
 	}
 
 	registerItemsInLocalStorage = () => {
@@ -84,7 +81,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	setCurrentUser: (user) => dispatch(action.setCurrentUser(user)),
 	setBasketItems: (items) => dispatch(action.setBasketItems(items)),
-	setCollections: (collections) => dispatch(action.setCollections(collections)),
 });
 App = connect(mapStateToProps, mapDispatchToProps)(App);
 export default App;

@@ -9,13 +9,11 @@ import CollectionItem from "../CollectionsOverview/CollectionPreview/CollectionI
 
 let CategoryCollection = ({ match, collections }) => {
 	const categoryItems = collections[match.params.categoryId];
-	const catergoryRendered = categoryItems ? (
-		categoryItems.items.map((item) => (
-			<CollectionItem key={item.id} item={item} />
-		))
-	) : (
-		<Redirect to="/" />
-	);
+	const catergoryRendered = categoryItems
+		? categoryItems.items.map((item) => (
+				<CollectionItem key={item.id} item={item} />
+		  ))
+		: Object.keys(collections).length && <Redirect to="/" />;
 	return (
 		<div className="category-collection">
 			<h1 className="category-title">{categoryItems && categoryItems.title}</h1>
