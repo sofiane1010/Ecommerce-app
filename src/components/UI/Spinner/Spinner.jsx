@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Loader.scss";
+import "./Spinner.scss";
 
 const loader = ({ fullScreen }) => {
 	const classes = ["loader-container", fullScreen ? "full-screen" : null];

@@ -2,11 +2,12 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
 	collections: {},
+	loading: true,
 };
 
 const reducer = (state = initialState, action) => {
 	if (action.type === actionTypes.SET_COLLECTIONS)
-		return { collections: action.collections };
+		return { laoding: false, collections: action.collections };
 	return state;
 };
 

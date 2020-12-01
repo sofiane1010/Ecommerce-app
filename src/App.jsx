@@ -5,13 +5,14 @@ import { connect } from "react-redux";
 import * as action from "./redux/actions";
 import * as selector from "./redux/selectors";
 
+import "./App.scss";
+
 import Layout from "./hoc/Layout/Layout";
 import Shop from "./pages/Shop/Shop";
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
 import Signout from "./pages/Auth/Signout/Signout";
 import Checkout from "./pages/Checkout/Checkout";
-import "./App.scss";
 
 class App extends Component {
 	componentDidMount() {
@@ -51,6 +52,7 @@ class App extends Component {
 	}
 	render() {
 		const { isAuth, numberOfItems } = this.props;
+
 		return (
 			<Layout>
 				<Switch>

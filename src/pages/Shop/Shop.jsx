@@ -5,12 +5,13 @@ import { connect } from "react-redux";
 import "./Shop.scss";
 
 import { convertCollectionsSnapshotToMap, db } from "../../firebase.utils";
-import { selectCollectionsArray } from "../../redux/selectors";
+import * as selector from "../../redux/selectors";
 import CollectionsOverview from "../../components/CollectionsOverview/CollectionsOverview";
 import CategoryCollection from "../../components/CategoryCollection/CategoryCollection";
 import { setCollections } from "../../redux/actions";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
-const Shop = ({ match, collections, dispatch }) => {
+const Shop = ({ loading, match, collections, dispatch }) => {
 	const [width, setWidth] = useState(window.innerWidth);
 	useLayoutEffect(() => {
 		const onResize = () => setWidth(window.innerWidth);
@@ -32,7 +33,9 @@ const Shop = ({ match, collections, dispatch }) => {
 		return unsubscribeFromDb;
 	}, [collections, dispatch]);
 
-	return (
+	const shopPage = loading ? (
+		<Spinner fullScreen />
+	) : (
 		<div className="shop-page">
 			<Route
 				exact
@@ -45,10 +48,12 @@ const Shop = ({ match, collections, dispatch }) => {
 			/>
 		</div>
 	);
+	return shopPage;
 };
 
 const mapStateToProps = (state) => ({
-	collections: selectCollectionsArray(state),
+	collections: selector.selectCollectionsArray(state),
+	loading: selector.selectShopLoading(state),
 });
 
 export default connect(mapStateToProps)(Shop);

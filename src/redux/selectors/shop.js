@@ -11,3 +11,11 @@ export const selectCollectionsArray = createSelector(
 	[selectCollections],
 	(collections) => Object.values(collections)
 );
+
+export const selectShopLoading = createSelector(
+	[selectShop],
+	(shop) => shop.loading
+);
+
+export const selectCollection = (routeName) =>
+	createSelector([selectCollections], (collections) => collections[routeName]);

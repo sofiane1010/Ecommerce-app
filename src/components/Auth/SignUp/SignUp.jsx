@@ -4,7 +4,6 @@ import { signUp, createNewPorfileDocument } from "../../../firebase.utils";
 import "./SignUp.scss";
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
-import Loader from "../../UI/Loader/Loader";
 
 const patterns = {
 	fullName: /^[a-zéèçà]+ [a-zéèçà]+$/i,
@@ -76,7 +75,6 @@ class SignUp extends Component {
 				errorMessage: "**Password doesn't match**",
 			},
 		},
-		loading: false,
 		error: null,
 	};
 
@@ -109,7 +107,6 @@ class SignUp extends Component {
 			.every((isValid) => isValid);
 		this.setState({ formInputs: updatedFormInputs });
 		if (formIsValid) {
-			this.setState({ loading: true });
 			try {
 				const { user } = await signUp(
 					email.inputAttributes.value,
@@ -119,7 +116,7 @@ class SignUp extends Component {
 					fullName: fullName.inputAttributes.value,
 				});
 			} catch (error) {
-				this.setState({ loading: false, error: error.message });
+				this.setState({ error: error.message });
 			}
 		}
 	};
@@ -136,16 +133,14 @@ class SignUp extends Component {
 	};
 
 	render() {
-		const { formInputs, loading, error } = this.state;
+		const { formInputs, error } = this.state;
 		const inputForm = Object.entries(formInputs).map(([key, value]) => (
 			<Input key={key} {...value} />
 		));
 		const errorMessage = error ? (
 			<p className="error-form-message">{error}</p>
 		) : null;
-		const signUpForm = loading ? (
-			<Loader />
-		) : (
+		return (
 			<div className="sign-up">
 				<h2>I don't have an account yet</h2>
 				<span>Sign up</span>
@@ -158,7 +153,6 @@ class SignUp extends Component {
 				</form>
 			</div>
 		);
-		return signUpForm;
 	}
 }
 export default SignUp;

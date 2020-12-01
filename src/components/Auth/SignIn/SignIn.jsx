@@ -8,7 +8,6 @@ import {
 import "./SignIn.scss";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
-import Loader from "../../UI/Loader/Loader";
 
 const patterns = {
 	email: /^([\w-.éèçà]+)@([\w-]+)\.([a-zéèçà]{2,8})(\.[a-zéèçà]{2,8})*$/,
@@ -49,7 +48,6 @@ class SignIn extends Component {
 				errorMessage: "**Must contain at least 6 alphanumeric caracters**",
 			},
 		},
-		loading: false,
 		error: null,
 	};
 
@@ -83,7 +81,7 @@ class SignIn extends Component {
 			const { user } = await signInWithGoogle();
 			await createNewPorfileDocument(user, null, true);
 		} catch (error) {
-			console.error(error.message);
+			this.setState({ error: error.message });
 		}
 	};
 
@@ -97,30 +95,27 @@ class SignIn extends Component {
 			.every((isValid) => isValid);
 		this.setState({ formInputs: updatedFormInputs });
 		if (formIsValid) {
-			this.setState({ loading: true });
 			try {
 				await signIn(
 					email.inputAttributes.value,
 					password.inputAttributes.value
 				);
 			} catch (error) {
-				this.setState({ loading: false, error: error.message });
+				this.setState({ error: error.message });
 			}
 		}
 	};
 
 	render() {
-		const { formInputs, loading, error } = this.state;
+		const { formInputs, error } = this.state;
 		const inputForm = Object.entries(formInputs).map(([key, value]) => (
 			<Input key={key} {...value} />
 		));
-		console.log(this.state);
 		const errorMessage = error ? (
 			<p className="error-form-message">{error}</p>
 		) : null;
-		const signInForm = loading ? (
-			<Loader />
-		) : (
+
+		return (
 			<div className="sign-in">
 				<h2>I already have an account</h2>
 				<span>Sign in with your email and password</span>
@@ -140,7 +135,6 @@ class SignIn extends Component {
 				</form>
 			</div>
 		);
-		return signInForm;
 	}
 }
 
