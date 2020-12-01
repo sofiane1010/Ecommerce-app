@@ -1,5 +1,8 @@
 /********************AUTHENITCATION*********************/
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const AUTH_START = "AUTH_START";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const AUTH_FAIL = "AUTH_FAIL";
 
 /******************BASKET*******************/
 export const ADD_ITEM_TO_BASKET = "ADD_ITEM_TO_BASKET";

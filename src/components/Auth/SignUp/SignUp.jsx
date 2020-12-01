@@ -1,9 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { signUp, createNewPorfileDocument } from "../../../firebase.utils";
 
 import "./SignUp.scss";
+
+import * as action from "../../../redux/actions";
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
+import { selectUserError } from "../../../redux/selectors/user";
 
 const patterns = {
 	fullName: /^[a-zéèçà]+ [a-zéèçà]+$/i,
@@ -75,7 +79,6 @@ class SignUp extends Component {
 				errorMessage: "**Password doesn't match**",
 			},
 		},
-		error: null,
 	};
 
 	checkInputValidity = (regex, value) => regex.test(value);
@@ -99,6 +102,7 @@ class SignUp extends Component {
 
 	handleSubmit = async (e) => {
 		e.preventDefault();
+		const { dispatch } = this.props;
 		const { formInputs } = this.state;
 		const { email, password, fullName } = formInputs;
 		const updatedFormInputs = this.checkFormValidity(formInputs);
@@ -107,6 +111,7 @@ class SignUp extends Component {
 			.every((isValid) => isValid);
 		this.setState({ formInputs: updatedFormInputs });
 		if (formIsValid) {
+			dispatch(action.authStart());
 			try {
 				const { user } = await signUp(
 					email.inputAttributes.value,
@@ -115,8 +120,9 @@ class SignUp extends Component {
 				await createNewPorfileDocument(user, {
 					fullName: fullName.inputAttributes.value,
 				});
+				dispatch(action.authSuccess());
 			} catch (error) {
-				this.setState({ error: error.message });
+				dispatch(action.authFail(error.message, "signUp"));
 			}
 		}
 	};
@@ -133,7 +139,8 @@ class SignUp extends Component {
 	};
 
 	render() {
-		const { formInputs, error } = this.state;
+		const { formInputs } = this.state;
+		const { error } = this.props;
 		const inputForm = Object.entries(formInputs).map(([key, value]) => (
 			<Input key={key} {...value} />
 		));
@@ -155,4 +162,8 @@ class SignUp extends Component {
 		);
 	}
 }
-export default SignUp;
+
+const mapStateToProps = (state) => ({
+	error: selectUserError(state).signUp,
+});
+export default connect(mapStateToProps)(SignUp);

@@ -13,6 +13,7 @@ import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
 import Signout from "./pages/Auth/Signout/Signout";
 import Checkout from "./pages/Checkout/Checkout";
+import Spinner from "./components/UI/Spinner/Spinner";
 
 class App extends Component {
 	componentDidMount() {
@@ -51,9 +52,11 @@ class App extends Component {
 		);
 	}
 	render() {
-		const { isAuth, numberOfItems } = this.props;
+		const { isAuth, numberOfItems, loading } = this.props;
 
-		return (
+		return loading ? (
+			<Spinner fullScreen />
+		) : (
 			<Layout>
 				<Switch>
 					<Route path="/signout" component={Signout} />
@@ -78,6 +81,7 @@ const mapStateToProps = (state) => ({
 	isAuth: selector.selectCurrentUser(state) !== null,
 	basket: state.basket,
 	numberOfItems: selector.selectNumberOfItems(state),
+	loading: selector.selectUserLoading(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

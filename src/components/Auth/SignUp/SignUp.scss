@@ -1,5 +1,11 @@
 .sign-up {
 	width: 40%;
+	.error-form-message {
+		font-size: 15px;
+		font-weight: bold;
+		color: red;
+		text-align: center;
+	}
 }
 
 @media (max-width: 970px) {
@@ -7,12 +13,5 @@
 		margin: 20px auto 30px;
 		width: 100%;
 		max-width: 600px;
-
-		.error-form-message {
-			font-size: 15px;
-			font-weight: bold;
-			color: red;
-			text-align: center;
-		}
 	}
 }

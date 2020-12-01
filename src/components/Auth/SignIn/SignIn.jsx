@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
 	signInWithGoogle,
 	signIn,
@@ -6,6 +7,9 @@ import {
 } from "../../../firebase.utils";
 
 import "./SignIn.scss";
+
+import { selectUserError } from "../../../redux/selectors";
+import * as action from "../../../redux/actions";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
 
@@ -48,7 +52,6 @@ class SignIn extends Component {
 				errorMessage: "**Must contain at least 6 alphanumeric caracters**",
 			},
 		},
-		error: null,
 	};
 
 	updateInputValue = (e) => {
@@ -81,12 +84,13 @@ class SignIn extends Component {
 			const { user } = await signInWithGoogle();
 			await createNewPorfileDocument(user, null, true);
 		} catch (error) {
-			this.setState({ error: error.message });
+			console.error(error.message);
 		}
 	};
 
 	handleSubmit = async (e) => {
 		e.preventDefault();
+		const { dispatch } = this.props;
 		const { formInputs } = this.state;
 		const { email, password } = formInputs;
 		const updatedFormInputs = this.checkFormValidity(formInputs);
@@ -95,19 +99,22 @@ class SignIn extends Component {
 			.every((isValid) => isValid);
 		this.setState({ formInputs: updatedFormInputs });
 		if (formIsValid) {
+			dispatch(action.authStart());
 			try {
 				await signIn(
 					email.inputAttributes.value,
 					password.inputAttributes.value
 				);
+				dispatch(action.authSuccess());
 			} catch (error) {
-				this.setState({ error: error.message });
+				dispatch(action.authFail(error.message, "signIn"));
 			}
 		}
 	};
 
 	render() {
-		const { formInputs, error } = this.state;
+		const { formInputs } = this.state;
+		const { error } = this.props;
 		const inputForm = Object.entries(formInputs).map(([key, value]) => (
 			<Input key={key} {...value} />
 		));
@@ -138,4 +145,8 @@ class SignIn extends Component {
 	}
 }
 
-export default SignIn;
+const mapStateToProps = (state) => ({
+	error: selectUserError(state).signIn,
+});
+
+export default connect(mapStateToProps)(SignIn);
