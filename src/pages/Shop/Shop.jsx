@@ -29,7 +29,7 @@ const Shop = ({ match, collections, dispatch }) => {
 				dispatch(setCollections(collections));
 			});
 		}
-		return () => unsubscribeFromDb();
+		return unsubscribeFromDb;
 	}, [collections, dispatch]);
 
 	return (
