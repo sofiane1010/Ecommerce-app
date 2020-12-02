@@ -4,11 +4,10 @@ import { connect } from "react-redux";
 
 import "./Shop.scss";
 
-import { convertCollectionsSnapshotToMap, db } from "../../firebase.utils";
 import * as selector from "../../redux/selectors";
 import CollectionsOverview from "../../components/CollectionsOverview/CollectionsOverview";
 import CategoryCollection from "../../components/CategoryCollection/CategoryCollection";
-import { setCollections } from "../../redux/actions";
+import { fetchCollections } from "../../redux/actions";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
 const Shop = ({ loading, match, collections, dispatch }) => {
@@ -20,17 +19,9 @@ const Shop = ({ loading, match, collections, dispatch }) => {
 	}, []);
 
 	useEffect(() => {
-		let unsubscribeFromDb;
 		if (!collections.length) {
-			const collectionsRef = db.collection("collections");
-			unsubscribeFromDb = collectionsRef.onSnapshot((collectionsSnapShot) => {
-				const collections = convertCollectionsSnapshotToMap(
-					collectionsSnapShot
-				);
-				dispatch(setCollections(collections));
-			});
+			dispatch(fetchCollections());
 		}
-		return unsubscribeFromDb;
 	}, [collections, dispatch]);
 
 	const shopPage = loading ? (

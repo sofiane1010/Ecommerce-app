@@ -19,3 +19,6 @@ export const selectShopLoading = createSelector(
 
 export const selectCollection = (routeName) =>
 	createSelector([selectCollections], (collections) => collections[routeName]);
+
+export const selectShopError = () =>
+	createSelector([selectShop], (shop) => shop.error);

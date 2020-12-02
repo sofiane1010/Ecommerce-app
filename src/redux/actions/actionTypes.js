@@ -13,7 +13,9 @@ export const EMPTY_BASKET = "EMPTY_BASKET";
 export const TOGGLE_SHOW_BASKET = "TOGGLE_SHOW_BASKET";
 
 /*******************SHOP**********************/
-export const SET_COLLECTIONS = "SET_COLLECTIONS";
+export const FETCH_COLLECTIONS_START = "FETCH_COLLECTIONS_START";
+export const FETCH_COLLECTIONS_SUCCESS = "FETCH_COLLECTIONS_SUCCESS";
+export const FETCH_COLLECTIONS_FAIL = "FETCH_COLLECTIONS_FAIL";
 
 /**********************SIDE_DRAWER*****************/
 export const TOGGLE_SHOW_SIDE_DRAWER = "TOGGLE_SHOW_SIDE_DRAWER";
